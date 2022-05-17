@@ -1,4 +1,4 @@
-
+import axios from 'axios'
 import React, { useState } from 'react';
 import './App.css';
 import Logger from './Logger';
@@ -86,9 +86,32 @@ function App() {
     return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(str);
   }
 
+
+
+  async function addUserToServer (event){
+    const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname}
+    try{
+      const response = await axios.post("https://localhost:5019/api/Users" , newMember,{withCredentials:true});
+      
+      console.log(response)
+      if(response.status == 200){
+        alert(reg.Username + ", You have successfully registered!!");
+        log.Username = reg.Username;
+        log.Password = reg.Password;
+        seter(3);
+      }
+    }
+    catch(error){
+      alert("Usernam1e '" + reg.Username + "' already taken");
+        signer(event);
+        return;
+      
+    }
+  }
   //////////////////////////////////register
   //register with the details of reg (and check validation)
-  let register = (event) => {
+   let register  =  (event) => {
+    event.preventDefault();
     //check all fiels are not empty
     if(reg.Username === '' || reg.Nickname === '' || reg.Password === '' || reg.Password2 === '' ) {
       alert("Please fill in all fields");
@@ -96,13 +119,14 @@ function App() {
         return;
     }
     //check if username not taken
-    for (var i = 0; i < members.length; i++) {
+   /* for (var i = 0; i < members.length; i++) {
       if (reg.Username === members[i].Username) {
         alert("Username '" + reg.Username + "' already taken");
         signer(event);
         return;
       }
-    }
+      */
+   // }
     if (reg.Password !== reg.Password2) {
       alert("password dont match");
       signer(event);
@@ -113,20 +137,19 @@ function App() {
       signer(event);
       return;
     }
-
+    addUserToServer(event);
     //if all checks passed successfully - register and login
-    const newMember = { Username: reg.Username, password: reg.Password, nickname: reg.Nickname, profilePhoto: profilePhoto };
-    let tempMem = members
-    tempMem.push(newMember)
-    setMembers(tempMem);
-    let tempContacts = contacts;
-    tempContacts.push({ Username: reg.Username, friends: [] })
-    setContacts(tempContacts);
-    logger(event);
-    alert(reg.Username + ", You have successfully registered!!");
-    log.Username = reg.Username;
-    log.Password = reg.Password;
-    seter(3);
+    //const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname, profilePhoto: profilePhoto };
+    //let tempMem = members
+    //tempMem.push(newMember)
+    //setMembers(tempMem);
+    //let tempContacts = contacts;
+    //tempContacts.push({ Username: reg.Username, friends: [] })
+    //setContacts(tempContacts);
+    //logger(event);
+
+ 
+    
   }
 
   //the members array
