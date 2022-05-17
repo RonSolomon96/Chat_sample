@@ -1,4 +1,4 @@
-import Voice from "./voice-icon.png"
+
 //display the record button and its logic
 function RecordPopup(props) {
 

@@ -1,5 +1,5 @@
 
-import Video from "./video-icon.png"
+
 function VideoPopup(props) {
 
   return (

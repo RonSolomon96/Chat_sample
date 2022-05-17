@@ -23,6 +23,7 @@ function App() {
     seter(1);
     setOpenChat(0);
     setcurrentFriend('');
+    setLog({ Username: "", Password: "" });
   }
   function chater(event) {
     event.preventDefault();
@@ -50,24 +51,27 @@ function App() {
   }
   //////////////////////////////////////////////////////////////
 
-  async function isExistInServer (event){
-    const newMember = { "Username": log.Username, "Password": log.Password}
-    try{
-      const response = await axios.get("http://localhost:5019/api/Users" , newMember);
-      
-      console.log(response)
-      if(response.status == 200){
-        alert(reg.Username + ", You have successfully registered!!");
-        log.Username = reg.Username;
-        log.Password = reg.Password;
-        seter(3);
+  async function isExistInServer(event) {
+    try {
+      const response = await axios.get("http://localhost:5019/api/Users/" + log.Username);
+      if (response.status == 200) {
+        console.log(response.data.password)
+        console.log(log.Password)
+        if (response.data.password === log.Password) {
+          seter(3);
+          return;
+        }
+        else {
+          alert("Username111 or password are incorrect");
+          return;
+        }
       }
     }
-    catch(error){
-      alert("Username '" + reg.Username + "' already taken");
-        signer(event);
-        return;
-      
+    catch (error) {
+      alert("Username or password are incorrect");
+
+      return;
+
     }
   }
   ///////////////////////////////////////login///////////////////////
@@ -81,16 +85,7 @@ function App() {
       alert("Please fill in all fields");
       return;
     }
-
-    //if the logger exists - log in
-    for (var i = 0; i < members.length; i++) {
-      if (members[i].Username === x.Username && members[i].password === x.Password) {
-        seter(3);
-        return;
-      }
-    }
-    //if no such logger exist
-    alert("Username or password are incorrect");
+    isExistInServer(event);
   }
 
   //for the profile photo
@@ -111,8 +106,6 @@ function App() {
     const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname ,"Server" : "ort"}
     try{
       const response = await axios.post("http://localhost:5019/api/Users" , newMember);
-      
-      console.log(response)
       if(response.status == 200){
         alert(reg.Username + ", You have successfully registered!!");
         log.Username = reg.Username;
