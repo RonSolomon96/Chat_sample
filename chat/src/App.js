@@ -50,7 +50,26 @@ function App() {
   }
   //////////////////////////////////////////////////////////////
 
-
+  async function isExistInServer (event){
+    const newMember = { "Username": log.Username, "Password": log.Password}
+    try{
+      const response = await axios.get("http://localhost:5019/api/Users" , newMember);
+      
+      console.log(response)
+      if(response.status == 200){
+        alert(reg.Username + ", You have successfully registered!!");
+        log.Username = reg.Username;
+        log.Password = reg.Password;
+        seter(3);
+      }
+    }
+    catch(error){
+      alert("Username '" + reg.Username + "' already taken");
+        signer(event);
+        return;
+      
+    }
+  }
   ///////////////////////////////////////login///////////////////////
   //log in with the details of the logger (and check validation)
   function logIn(event) {
@@ -102,7 +121,7 @@ function App() {
       }
     }
     catch(error){
-      alert("Usernam1e '" + reg.Username + "' already taken");
+      alert("Username '" + reg.Username + "' already taken");
         signer(event);
         return;
       
