@@ -89,9 +89,9 @@ function App() {
 
 
   async function addUserToServer (event){
-    const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname}
+    const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname ,"Server" : "ort"}
     try{
-      const response = await axios.post("https://localhost:5019/api/Users" , newMember,{withCredentials:true});
+      const response = await axios.post("http://localhost:5019/api/Users" , newMember);
       
       console.log(response)
       if(response.status == 200){
