@@ -1,0 +1,21 @@
+.popupbtn {
+    background-color: rgba(199, 85, 146, 0.8);
+}
+.popupbtn:hover {
+    background-color: rgba(133, 59, 98, 0.7);
+}
+
+  .chatnav3{
+    background-color:rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    font-size: x-large ;
+    
+    
+  }
+  .chatnav3:hover{
+    background-color:rgba(255, 255, 255, 0.658);
+  }

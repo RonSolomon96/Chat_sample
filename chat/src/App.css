@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(115, 181, 203); /* For browsers that do not support gradients */
+  background: linear-gradient(to bottom right, rgb(195, 233, 233),rgb(0, 78, 87)) fixed;
+  background-image: url("background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 100%;
+  
+  
+  height: 100%;
+}
