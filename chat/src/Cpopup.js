@@ -20,7 +20,14 @@ function Cpopup(props) {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <input className="form-control" id='cpopup-input' placeholder="Type here contact's identifier" onChange= {props.handelCpopup}></input>
+            <div>
+              <input className="form-control" id='cpopup-input1' placeholder="Type here contact's id" onChange= {props.handelCpopup}></input>
+              </div>
+              <div className="modal-body"></div>
+              <input className="form-control" id='cpopup-input2' placeholder="Type here contact's nickname" onChange= {props.handelCpopup}></input>
+              </div>
+              <div className="modal-body">
+              <input className="form-control" id='cpopup-input3' placeholder="Type here contact's server" onChange= {props.handelCpopup}></input>
             </div>
             <div className="modal-footer">
               <button type="button" value={props.newFriend} className="btn btn-primary popupbtn" onClick={props.add} data-bs-dismiss="modal">Add</button>

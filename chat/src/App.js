@@ -206,6 +206,10 @@ function App() {
     { Username: "Avital", friends: []},
     { Username: "Yoav", friends: []}])
   
+
+
+
+
   //find the logger's friends
   var friends;
   for (var i = 0; i < contacts.length; i++) {
@@ -215,47 +219,46 @@ function App() {
     }
   }
 
-  //add friend to logger
-  function add(event) {
-    var exists = 0;
-    var nickname = "";
-    //check if newFriend exists
-    for (let i = 0; i < members.length; i++) {
-      if (members[i].Username === event.target.value) {
-        exists = 1;
-        nickname = members[i].nickname;
-        break;
-      }
-    }
-    if (!exists) {
-      return;
-    }
-    //if mewFriend is logger - do nothing
-    if (event.target.value === log.Username) {
-      return;
-    }
-    //if already a friend
-    for (let i = 0; i < friends.length; i++) {
-      console.log(friends[i]);
-      console.log(event.target.value);
-      if (friends[i].Username === event.target.value) {
-        deleteCpopupInput();
-        return;
-      }
-    }
-    //else -  add as friend
-    for (let i = 0; i < contacts.length; i++) {
-      if (contacts[i].Username === log.Username) {
-        var newf = {Username : event.target.value, nickname : nickname};
-        contacts[i].friends.push(newf);
-        console.log("after adding")
-        console.log(contacts)
-        setContacts([...contacts])
-        deleteCpopupInput();
-        return;
-      }
-    }
-  }
+ 
+  //   var exists = 0;
+  //   var nickname = "";
+  //   //check if newFriend exists
+  //   for (let i = 0; i < members.length; i++) {
+  //     if (members[i].Username === event.target.value) {
+  //       exists = 1;
+  //       nickname = members[i].nickname;
+  //       break;
+  //     }
+  //   }
+  //   if (!exists) {
+  //     return;
+  //   }
+  //   //if mewFriend is logger - do nothing
+  //   if (event.target.value === log.Username) {
+  //     return;
+  //   }
+  //   //if already a friend
+  //   for (let i = 0; i < friends.length; i++) {
+  //     console.log(friends[i]);
+  //     console.log(event.target.value);
+  //     if (friends[i].Username === event.target.value) {
+  //       deleteCpopupInput();
+  //       return;
+  //     }
+  //   }
+  //   //else -  add as friend
+  //   for (let i = 0; i < contacts.length; i++) {
+  //     if (contacts[i].Username === log.Username) {
+  //       var newf = {Username : event.target.value, nickname : nickname};
+  //       contacts[i].friends.push(newf);
+  //       console.log("after adding")
+  //       console.log(contacts)
+  //       setContacts([...contacts])
+  //       deleteCpopupInput();
+  //       return;
+  //     }
+  //   }
+  // }
   ////////////////////////////////////////
 
   //each two members have chat (array of messages )
@@ -333,9 +336,15 @@ function App() {
 
   ////////////for the popups///////////////////////////
   function deleteCpopupInput(){
-    const chatInput = document.getElementById('cpopup-input');
-    chatInput.value = "";
+    const chatInput1 = document.getElementById('cpopup-input1');
+    const chatInput2 = document.getElementById('cpopup-input2');
+    const chatInput3 = document.getElementById('cpopup-input3');
+    chatInput1.value = "";
+    chatInput2.value = "";
+    chatInput3.value = "";
     setNewFriend("");
+    setNewFriendNickname("");
+    setNewFriendServer("");
 
   }
 
@@ -410,9 +419,47 @@ var [scrl,setScrl] = useState(0);
   ////////////////////////////////////////cpopup
   //save new friend
   var [newFriend, setNewFriend] = useState("");
+  var [newFriendNickname, setNewFriendNickname] = useState("");
+  var [newFriendServer, setNewFriendServer] = useState("");
+
   function handelCpopup(event) {
-    setNewFriend(event.target.value);
+    if (event.target.id === "cpopup-input1") {
+      setNewFriend(event.target.value);
+    }
+    if (event.target.id === "cpopup-input2") {
+      setNewFriendNickname(event.target.value);
+    }
+    if (event.target.id === "cpopup-input3") {
+      setNewFriendServer(event.target.value);
+    }
   }
+  const [update, setUpdate] = useState(true);
+  console.log(update);
+ 
+  async function addContact() {
+    try {
+      const newContact = { "Id": newFriend, "Name": newFriendNickname, "Server": newFriendServer}
+      const response = await axios.post("http://localhost:5019/api/Contacts/" + log.Username, newContact);
+      if (response.status == 200) {
+        //setUpdate(!update);
+        console.log(update);
+      }
+    }
+    catch (error) {
+    }
+  
+}
+
+   // //add friend to logger
+   function add() {
+    addContact();
+    deleteCpopupInput();
+    console.log("ortalllll");
+    //setUpdate(!update);
+    
+    return;
+   }
+
   ////////////////////////////////////////////////////voice/////////////////////////////////////
  //save the new record to be sent
   const [recordUrl, setrecordUrl] = useState('');
@@ -480,7 +527,7 @@ var [scrl,setScrl] = useState(0);
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-    return (<Chater handleClick={logger} friends={friends} log={log} add={add} messages={messages}
+    return (<Chater handleClick={logger}  friends={friends} log={log} add={add} messages={messages}
       chat={chat.chat} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}

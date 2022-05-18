@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Cpopup from './Cpopup';
 import Friendlist from './Friendlist';
 import './Chater.css';
@@ -6,7 +7,33 @@ import Messageshow from './Messageshow';
 import { useEffect, useState } from "react";
 
 //display chat screen 
-function Chater(props) {
+ function Chater(props) {
+
+
+
+
+  const [friends,setFriends] =useState([]) ;
+      //////////////////////////////////////////////////////////////////////////////
+      useEffect( () =>  {
+        async function findContact (){
+          try {
+            const response = await axios.get("http://localhost:5019/api/Contacts/" + props.log.Username);
+            if (response.status == 200) {
+              setFriends(response.data);
+              return;
+              
+            } 
+          }
+          catch (error) {
+            console.log(3)
+            return ;
+          }
+        }
+       findContact();
+      },[]);
+    
+      //////////////////////////////////////////////////////////////////////////
+  
 
   //remove chat background color once the chat is open
   if(props.openChat === 1) {
@@ -40,6 +67,7 @@ function Chater(props) {
     msgdiv.scrollTop = msgdiv.scrollHeight;
     props.setScrl(0);
     }
+   
 })
   return (
     <>
@@ -50,12 +78,12 @@ function Chater(props) {
             <ul>
             <li><div className="chatnav4" > <img src={photo} className="contact-img" /></div></li>
               <li><div className="chatnav4" >Hello {props.log.Username}</div></li>
-              <li className="send"><Cpopup log={props.log} friends={props.friends} add={props.add} contacts={props.contacts}
+              <li className="send"><Cpopup log={props.log} friends={friends} add={props.add} contacts={props.contacts}
                 members={props.members} handelCpopup={props.handelCpopup} newFriend={props.newFriend} /></li>
             </ul>
           </div>
           <div className='row' id='scrl1'>
-            <Friendlist friends={props.friends} chatFinder={props.chatFinder} log={props.log} messages={props.messages} members={props.members}
+            <Friendlist friends={friends} chatFinder={props.chatFinder} log={props.log} messages={props.messages} members={props.members}
               currentFriend={props.currentFriend} />
           </div>
         </div>
