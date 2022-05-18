@@ -9,9 +9,6 @@ import { useEffect, useState } from "react";
 //display chat screen 
  function Chater(props) {
 
-
-
-
   const [friends,setFriends] =useState([]) ;
       //////////////////////////////////////////////////////////////////////////////
       useEffect( () =>  {
@@ -30,7 +27,7 @@ import { useEffect, useState } from "react";
           }
         }
        findContact();
-      },[]);
+      });
     
       //////////////////////////////////////////////////////////////////////////
   
