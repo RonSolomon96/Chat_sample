@@ -9,11 +9,12 @@ import { useEffect, useState } from "react";
 //display chat screen 
  function Chater(props) {
 
-  const [friends,setFriends] =useState([]) ;
+  const [friends,setFriends] = useState([]) ;
       //////////////////////////////////////////////////////////////////////////////
       useEffect( () =>  {
         async function findContact (){
           try {
+            console.log("jfcuhfidyb");
             const response = await axios.get("http://localhost:5019/api/Contacts/" + props.log.Username);
             if (response.status == 200) {
               setFriends(response.data);
@@ -25,7 +26,7 @@ import { useEffect, useState } from "react";
           }
         }
        findContact();
-      });
+      },[props.try2]);
     
       //////////////////////////////////////////////////////////////////////////
   

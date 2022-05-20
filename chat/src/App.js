@@ -308,7 +308,7 @@ function App() {
   // set the current chat data
   var [chat, setChat] = useState({ Username1: "", Username2: "", chat: [] });
 
-  const [startMessagesShearch,setStartMessagesShearch] =useState(true) ;
+  const [startMessagesSearch,setStartMessagesSearch] =useState(true) ;
 
   const [messages,setMessages] =useState([]) ;
       //////////////////////////////////////////////////////////////////////////////
@@ -327,7 +327,7 @@ function App() {
           }
           findMessages()
         }
-      },[startMessagesShearch]);
+      },[startMessagesSearch]);
 
   //find the current chat
   function chatFinder(event) {
@@ -337,7 +337,7 @@ function App() {
     if (openChat !== 1) {
       openTheChat(event);
     }
-    setStartMessagesShearch(!startMessagesShearch);
+    setStartMessagesSearch(!startMessagesSearch);
   }
   //find the current chat
   // function chatFinder(event) {
@@ -449,6 +449,31 @@ var [scrl,setScrl] = useState(0);
     }
   }
 
+
+  async function addMsg() {
+    try {
+      const newMsg = { "Content": send.str}
+      const response = await axios.post("http://localhost:5019/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages", newMsg);
+      if (response.status == 200) {
+        setUpdate(!update);
+      }
+    }
+    catch (error) {
+    }
+}
+
+
+
+  async function addToChat2(event){
+    await addMsg();
+    deleteInput();
+    setrecordUrl('');
+    //scroll down
+    setScrl(1);
+    setStartMessagesSearch(!startMessagesSearch);
+    return;
+   }
+
   ////////////////////////////////////////cpopup
   //save new friend
   var [newFriend, setNewFriend] = useState("");
@@ -480,10 +505,12 @@ var [scrl,setScrl] = useState(0);
     }
 }
 
+const [try2,setTry2] = useState(true) ;
    // //add friend to logger
-   function add() {
-    addContact();
+   async function add() {
+    await addContact();
     deleteCpopupInput();
+    setTry2(!try2);
     return;
    }
 
@@ -554,8 +581,8 @@ var [scrl,setScrl] = useState(0);
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-    return (<Chater handleClick={logger}  log={log} add={add} messages={messages}
-      chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat} currentFriend={currentFriend}
+    return (<Chater handleClick={logger} try2 = {try2} log={log} add={add} messages={messages}
+      chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}
        screenSize={(screenSize.dynamicWidth * 0.45)}/>)
