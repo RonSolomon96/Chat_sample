@@ -505,10 +505,24 @@ var [scrl,setScrl] = useState(0);
     }
 }
 
+async function addContactToAnotherServ() {
+  try {
+    const payload = { "From" : log.Username, "To" : newFriend , "Server": "localhost:5019"}
+    const response = await axios.post("http://"+ newFriendServer + "/api/invitations", payload);
+    if (response.status == 200) {
+      setUpdate(!update);
+    }
+  }
+  catch (error) {
+  }
+}
+
 const [try2,setTry2] = useState(true) ;
+
    // //add friend to logger
    async function add() {
     await addContact();
+    await addContactToAnotherServ();
     deleteCpopupInput();
     setTry2(!try2);
     return;
