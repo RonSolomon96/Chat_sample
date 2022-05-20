@@ -22,8 +22,6 @@ import { useEffect, useState } from "react";
             } 
           }
           catch (error) {
-            console.log(3)
-            return ;
           }
         }
        findContact();
@@ -80,7 +78,7 @@ import { useEffect, useState } from "react";
             </ul>
           </div>
           <div className='row' id='scrl1'>
-            <Friendlist friends={friends} chatFinder={props.chatFinder} log={props.log} messages={props.messages} members={props.members}
+            <Friendlist friends={friends} chatFinder={props.chatFinder} log={props.log} members={props.members}
               currentFriend={props.currentFriend} />
           </div>
         </div>
@@ -95,7 +93,7 @@ import { useEffect, useState } from "react";
             <Messageshow chat={props.chat} openChat={props.openChat} />
           </div>
           <div className='row'>
-            <ChatBox chat={props.chat} handleSend={props.handleSend} addToChat={props.addToChat}
+            <ChatBox handleSend={props.handleSend} addToChat={props.addToChat}
               handleFile={props.handleFile} file={props.file} addFileToChat={props.addFileToChat}
               openChat={props.openChat} record={props.record} recordUrl={props.recordUrl} stopRecord={props.stopRecord}
               screenSize={props.screenSize}

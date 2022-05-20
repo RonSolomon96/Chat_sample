@@ -29,6 +29,8 @@ function App() {
     event.preventDefault();
     seter(3);
   }
+
+  const [update, setUpdate] = useState(true);
   //////////////////////////////////////////
 
   //details on the logger
@@ -62,7 +64,7 @@ function App() {
           return;
         }
         else {
-          alert("Username111 or password are incorrect");
+          alert("Username or password are incorrect");
           return;
         }
       }
@@ -211,13 +213,13 @@ function App() {
 
 
   //find the logger's friends
-  var friends;
-  for (var i = 0; i < contacts.length; i++) {
-    if (contacts[i].Username === log.Username) {
-      friends = contacts[i].friends;
-      break;
-    }
-  }
+  // var friends;
+  // for (var i = 0; i < contacts.length; i++) {
+  //   if (contacts[i].Username === log.Username) {
+  //     friends = contacts[i].friends;
+  //     break;
+  //   }
+  // }
 
  
   //   var exists = 0;
@@ -263,7 +265,7 @@ function App() {
 
   //each two members have chat (array of messages )
   //message have time, who sent it(1 or 2) and type (string, image, video or record)
-  const [messages, setMessage] = useState(
+  const [messages1, setMessage1] = useState(
     [{ Username1: "Ortal", Username2: "Ron", chat: [{time: "00:00", flag: 1, str: "Ron, can you send me the video?" ,image : '', video :'',record:'' },
             {time: "00:00", flag: 2, str: '', image : '', video : Video1 ,record:'' }, 
             {time: "00:00", flag: 1, str: '',image : Crown, video :'',record:'' },] },
@@ -306,6 +308,27 @@ function App() {
   // set the current chat data
   var [chat, setChat] = useState({ Username1: "", Username2: "", chat: [] });
 
+  const [startMessagesShearch,setStartMessagesShearch] =useState(true) ;
+
+  const [messages,setMessages] =useState([]) ;
+      //////////////////////////////////////////////////////////////////////////////
+      useEffect( () =>  {
+        if(log.Username !== "" && currentFriend !== "") {
+          async function findMessages (){
+            try {
+              const response = await axios.get("http://localhost:5019/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages");
+              if (response.status == 200) {
+                setMessages(response.data);
+                return;
+              } 
+            }
+            catch (error) {
+            }
+          }
+          findMessages()
+        }
+      },[startMessagesShearch]);
+
   //find the current chat
   function chatFinder(event) {
     //catch the friend that we are chatting with right now
@@ -314,25 +337,35 @@ function App() {
     if (openChat !== 1) {
       openTheChat(event);
     }
-    //seek the chat, catch it and display it on screen
-    for (var i = 0; i < messages.length; i++) {
-      if (messages[i].Username1 === log.Username
-        && messages[i].Username2 === event.currentTarget.value) {
-        var tempChat = {
-          Username1: messages[i].Username1, Username2: messages[i].Username2
-          , chat: messages[i].chat
-        }
-        setChat(tempChat);
-        return;
-      }
-    }
-    //if there is no chat yet - initialize one
-    setChat({ Username1: log.Username, Username2: event.currentTarget.value , chat: [] });
-    var helpChat = { Username1: log.Username, Username2: event.currentTarget.value , chat: [] }
-    var tempMessages = [...messages];
-    tempMessages.push(helpChat)
-    setMessage(tempMessages);
+    setStartMessagesShearch(!startMessagesShearch);
   }
+  //find the current chat
+  // function chatFinder(event) {
+  //   //catch the friend that we are chatting with right now
+  //   setcurrentFriend(event.currentTarget.value);
+  //   //open chat
+  //   if (openChat !== 1) {
+  //     openTheChat(event);
+  //   }
+  //   //seek the chat, catch it and display it on screen
+  //   for (var i = 0; i < messages.length; i++) {
+  //     if (messages[i].Username1 === log.Username
+  //       && messages[i].Username2 === event.currentTarget.value) {
+  //       var tempChat = {
+  //         Username1: messages[i].Username1, Username2: messages[i].Username2
+  //         , chat: messages[i].chat
+  //       }
+  //       setChat(tempChat);
+  //       return;
+  //     }
+  //   }
+  //   //if there is no chat yet - initialize one
+  //   setChat({ Username1: log.Username, Username2: event.currentTarget.value , chat: [] });
+  //   var helpChat = { Username1: log.Username, Username2: event.currentTarget.value , chat: [] }
+  //   var tempMessages = [...messages];
+  //   tempMessages.push(helpChat)
+  //   setMessage(tempMessages);
+  // }
 
   ////////////for the popups///////////////////////////
   function deleteCpopupInput(){
@@ -405,7 +438,7 @@ var [scrl,setScrl] = useState(0);
         && messages[i].Username2 === chat.Username2) {
         var tempMessages = [...messages];
         tempMessages[i] = new_obj;
-        setMessage(tempMessages);
+        setMessages(tempMessages);
         console.log(messages);
         deleteInput();
         setrecordUrl('');
@@ -433,30 +466,24 @@ var [scrl,setScrl] = useState(0);
       setNewFriendServer(event.target.value);
     }
   }
-  const [update, setUpdate] = useState(true);
-  console.log(update);
+  
  
   async function addContact() {
     try {
       const newContact = { "Id": newFriend, "Name": newFriendNickname, "Server": newFriendServer}
       const response = await axios.post("http://localhost:5019/api/Contacts/" + log.Username, newContact);
       if (response.status == 200) {
-        //setUpdate(!update);
-        console.log(update);
+        setUpdate(!update);
       }
     }
     catch (error) {
     }
-  
 }
 
    // //add friend to logger
    function add() {
     addContact();
     deleteCpopupInput();
-    console.log("ortalllll");
-    //setUpdate(!update);
-    
     return;
    }
 
@@ -527,8 +554,8 @@ var [scrl,setScrl] = useState(0);
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-    return (<Chater handleClick={logger}  friends={friends} log={log} add={add} messages={messages}
-      chat={chat.chat} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat} currentFriend={currentFriend}
+    return (<Chater handleClick={logger}  log={log} add={add} messages={messages}
+      chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}
        screenSize={(screenSize.dynamicWidth * 0.45)}/>)

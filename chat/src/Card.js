@@ -56,16 +56,16 @@ function Card(props) {
   // }
   
   //if the friend is the friend that we are currently talking with
-  if(props.friend.Username === props.currentFriend) {
+  if(props.friend.id === props.currentFriend) {
     return (<div>
-      <button id="rcorners1" value={props.friend.Username} onClick={props.chatFinder}>
+      <button id="rcorners1" value={props.friend.id} onClick={props.chatFinder}>
         
           <div className="row">
             <div className="col-3">
             <img src={photo} className="contact-img" />
             </div>
             <div className="col-6">
-              <p id = "cardNick">{props.friend.nickname}</p>
+              <p id = "cardNick">{props.friend.name}</p>
               <p>{lastmsg}</p>
             </div>
             <div className="col-3">
