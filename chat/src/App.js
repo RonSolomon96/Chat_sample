@@ -55,7 +55,7 @@ function App() {
 
   async function isExistInServer(event) {
     try {
-      const response = await axios.get("http://localhost:5019/api/Users/" + log.Username);
+      const response = await axios.get("http://localhost:5020/api/Users/" + log.Username);
       if (response.status == 200) {
         console.log(response.data.password)
         console.log(log.Password)
@@ -107,7 +107,7 @@ function App() {
   async function addUserToServer (event){
     const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname ,"Server" : "ort"}
     try{
-      const response = await axios.post("http://localhost:5019/api/Users" , newMember);
+      const response = await axios.post("http://localhost:5020/api/Users" , newMember);
       if(response.status == 200){
         alert(reg.Username + ", You have successfully registered!!");
         log.Username = reg.Username;
@@ -299,24 +299,25 @@ function App() {
   //determine if the chat is open - initialize:0(closed)
   const [openChat, setOpenChat] = useState(0);
 
-  function openTheChat(event) {
+  function openTheChat() {
     setOpenChat(1);
   }
 
   //save the friend that we are chatting with right now
   const [currentFriend, setcurrentFriend] = useState('');
+  const [currentFriendServe, setcurrentFriendServe] = useState('');
   // set the current chat data
   var [chat, setChat] = useState({ Username1: "", Username2: "", chat: [] });
 
   const [startMessagesSearch,setStartMessagesSearch] =useState(true) ;
 
-  const [messages,setMessages] =useState([]) ;
+  const [messages,setMessages] = useState([]) ;
       //////////////////////////////////////////////////////////////////////////////
       useEffect( () =>  {
         if(log.Username !== "" && currentFriend !== "") {
           async function findMessages (){
             try {
-              const response = await axios.get("http://localhost:5019/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages");
+              const response = await axios.get("http://localhost:5020/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages");
               if (response.status == 200) {
                 setMessages(response.data);
                 return;
@@ -330,12 +331,17 @@ function App() {
       },[startMessagesSearch]);
 
   //find the current chat
-  function chatFinder(event) {
+  function chatFinder(name, server) {
     //catch the friend that we are chatting with right now
-    setcurrentFriend(event.currentTarget.value);
+    setcurrentFriend(name);
+    setcurrentFriendServe(server);
+   // console.log(currentFriend.server);
+    //console.log(currentFriend.id);
+
+
     //open chat
     if (openChat !== 1) {
-      openTheChat(event);
+      openTheChat();
     }
     setStartMessagesSearch(!startMessagesSearch);
   }
@@ -450,10 +456,23 @@ var [scrl,setScrl] = useState(0);
   }
 
 
+  async function addMsgToAnotherServ() {
+    try {
+      const newMsg = { "From" : log.Username, "To" : currentFriend ,"Content": send.str}
+      const response = await axios.post("http://"+ currentFriendServe + "/api/transfers", newMsg);
+      if (response.status == 200) {
+        setUpdate(!update);
+      }
+    }
+    catch (error) {
+    }
+  }
+
+
   async function addMsg() {
     try {
       const newMsg = { "Content": send.str}
-      const response = await axios.post("http://localhost:5019/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages", newMsg);
+      const response = await axios.post("http://localhost:5020/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages", newMsg);
       if (response.status == 200) {
         setUpdate(!update);
       }
@@ -466,6 +485,7 @@ var [scrl,setScrl] = useState(0);
 
   async function addToChat2(event){
     await addMsg();
+    await addMsgToAnotherServ();
     deleteInput();
     setrecordUrl('');
     //scroll down
@@ -496,7 +516,7 @@ var [scrl,setScrl] = useState(0);
   async function addContact() {
     try {
       const newContact = { "Id": newFriend, "Name": newFriendNickname, "Server": newFriendServer}
-      const response = await axios.post("http://localhost:5019/api/Contacts/" + log.Username, newContact);
+      const response = await axios.post("http://localhost:5020/api/Contacts/" + log.Username, newContact);
       if (response.status == 200) {
         setUpdate(!update);
       }
@@ -507,8 +527,8 @@ var [scrl,setScrl] = useState(0);
 
 async function addContactToAnotherServ() {
   try {
-    const payload = { "From" : log.Username, "To" : newFriend , "Server": "localhost:5019"}
-    const response = await axios.post("http://"+ newFriendServer + "/api/invitations", payload);
+    const payload = { "From" : log.Username, "To" : newFriend , "Server": "localhost:5020"}
+    const response = await axios.post("http://" + newFriendServer + "/api/invitations", payload);
     if (response.status == 200) {
       setUpdate(!update);
     }

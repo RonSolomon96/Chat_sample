@@ -58,7 +58,7 @@ function Card(props) {
   //if the friend is the friend that we are currently talking with
   if(props.friend.id === props.currentFriend) {
     return (<div>
-      <button id="rcorners1" value={props.friend.id} onClick={props.chatFinder}>
+      <button id="rcorners1" value = {props.friend.id}   onClick={() => { props.chatFinder(props.friend.id, props.friend.server);}}>
         
           <div className="row">
             <div className="col-3">
@@ -79,7 +79,7 @@ function Card(props) {
   //if not:
   else {
     return (<div>
-      <button id="rcorners" value={props.friend.id} onClick={props.chatFinder}>
+      <button id="rcorners" value = {props.friend.id}   onClick={() => { props.chatFinder(props.friend.id, props.friend.server);}}>
         
           <div className="row">
             <div className="col-3">
