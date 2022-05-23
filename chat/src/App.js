@@ -459,7 +459,7 @@ var [scrl,setScrl] = useState(0);
   async function addMsgToAnotherServ() {
     try {
       const newMsg = { "From" : log.Username, "To" : currentFriend ,"Content": send.str}
-      const response = await axios.post("http://"+ currentFriendServe + "/api/transfers", newMsg);
+      const response = await axios.post("http://"+ currentFriendServe + "/api/transfer", newMsg);
       if (response.status == 200) {
         setUpdate(!update);
       }
