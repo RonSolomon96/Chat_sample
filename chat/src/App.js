@@ -10,6 +10,7 @@ import Record1 from "./maNishmaRecord.txt"
 import Crown from "./crown.png"
 import Video1 from "./video.mp4"
 import { useEffect} from "react";
+import signalR from '@microsoft/signalr'
 
 function App() {
   //here we use the state to determine which page to show  
