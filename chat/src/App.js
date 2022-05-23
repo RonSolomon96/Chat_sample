@@ -486,6 +486,7 @@ var [scrl,setScrl] = useState(0);
   async function addToChat2(event){
     await addMsg();
     await addMsgToAnotherServ();
+    setTry2(!try2);
     deleteInput();
     setrecordUrl('');
     //scroll down
