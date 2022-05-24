@@ -549,6 +549,19 @@ const [try2,setTry2] = useState(true) ;
     setTry2(!try2);
     return;
    }
+        //////////////////////////////////////////////////////////////////////////
+  ////signalr
+  //const startConnect = async ()=>{
+try{
+  const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/myHub")
+  .build();
+  sharedContext.connection = connection;
+  connection.on("somthingAdded",()=>{
+    setTry2(!try2);
+  });
+  connection.start;
+}catch{};
+//  };
 
   ////////////////////////////////////////////////////voice/////////////////////////////////////
  //save the new record to be sent
