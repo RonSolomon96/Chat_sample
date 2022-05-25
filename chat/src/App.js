@@ -10,7 +10,7 @@ import Record1 from "./maNishmaRecord.txt"
 import Crown from "./crown.png"
 import Video1 from "./video.mp4"
 import { useEffect} from "react";
-import signalR from '@microsoft/signalr'
+import  { HubConnectionBuilder} from '@microsoft/signalr'
 
 function App() {
   //here we use the state to determine which page to show  
@@ -26,8 +26,9 @@ function App() {
     setcurrentFriend('');
     setLog({ Username: "", Password: "" });
   }
-  function chater(event) {
-    event.preventDefault();
+  async function chater() {
+    await startConnect();
+    console.log('orttttttttt ya mechoeret');
     seter(3);
   }
 
@@ -61,7 +62,7 @@ function App() {
         console.log(response.data.password)
         console.log(log.Password)
         if (response.data.password === log.Password) {
-          seter(3);
+          await chater();
           return;
         }
         else {
@@ -113,7 +114,7 @@ function App() {
         alert(reg.Username + ", You have successfully registered!!");
         log.Username = reg.Username;
         log.Password = reg.Password;
-        seter(3);
+         await chater();
       }
     }
     catch(error){
@@ -551,17 +552,18 @@ const [try2,setTry2] = useState(true) ;
    }
         //////////////////////////////////////////////////////////////////////////
   ////signalr
-  //const startConnect = async ()=>{
+  const [noa, setNoa] = useState(true);
+  async function  startConnect(){
 try{
-  const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/myHub")
+  const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/MyHub")
   .build();
-  sharedContext.connection = connection;
   connection.on("somthingAdded",()=>{
     setTry2(!try2);
   });
-  connection.start;
-}catch{};
-//  };
+  await connection.start();
+  setNoa(connection);
+}catch(e){console.log(e)};
+  };
 
   ////////////////////////////////////////////////////voice/////////////////////////////////////
  //save the new record to be sent
@@ -630,7 +632,7 @@ try{
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-    return (<Chater handleClick={logger} try2 = {try2} log={log} add={add} messages={messages}
+    return (<Chater handleClick={logger} noa = {noa} try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
       chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}

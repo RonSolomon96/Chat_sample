@@ -6,9 +6,13 @@ import ChatBox from './ChatBox';
 import Messageshow from './Messageshow';
 import { useEffect, useState } from "react";
 
+
 //display chat screen 
  function Chater(props) {
-
+  //props.noa("somthingAdded",()=>{
+    //props.setTry2(!props.try2);
+    //console.log(props.try2)
+  //});
   const [friends,setFriends] = useState([]) ;
       //////////////////////////////////////////////////////////////////////////////
       useEffect( () =>  {
@@ -105,5 +109,5 @@ import { useEffect, useState } from "react";
       <ul>
       </ul>
     </>);
-}
+  }
 export default Chater
