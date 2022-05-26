@@ -107,7 +107,7 @@ function App() {
 
 
   async function addUserToServer (event){
-    const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname ,"Server" : "ort"}
+    const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname ,"Server" : "localhost:5020"}
     try{
       const response = await axios.post("http://localhost:5020/api/Users" , newMember);
       if(response.status == 200){
@@ -487,6 +487,7 @@ var [scrl,setScrl] = useState(0);
   async function addToChat2(event){
     await addMsg();
     await addMsgToAnotherServ();
+    setTry2(!try2);
     setStartMessagesSearch(!startMessagesSearch);
     deleteInput();
     //scroll down
