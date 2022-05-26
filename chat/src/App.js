@@ -28,7 +28,7 @@ function App() {
   }
   async function chater() {
     await startConnect();
-    console.log('orttttttttt ya mechoeret');
+   
     seter(3);
   }
 
@@ -648,11 +648,9 @@ try{
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-<<<<<<< HEAD
+
     return (<Chater handleClick={logger}  try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
-=======
-    return (<Chater handleClick={logger} try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
->>>>>>> 306d7061f25e2bf91c26dbde3a5039345302be7c
+
     chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}
