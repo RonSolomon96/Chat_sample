@@ -648,7 +648,7 @@ try{
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-    return (<Chater handleClick={logger} noa = {noa} try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
+    return (<Chater handleClick={logger} try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
     chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}
