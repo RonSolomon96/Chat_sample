@@ -570,9 +570,9 @@ try{
     console.log("enter");
     console.log(startMessagesSearch);
     setTry2(!try2);
-    setStartMessagesSearch(!false);
+    setStartMessagesSearch(false);
     console.log(startMessagesSearch);
-    //setStartMessagesSearch(true);
+    setStartMessagesSearch(true);
     console.log(startMessagesSearch);
     console.log("enter");
   });
