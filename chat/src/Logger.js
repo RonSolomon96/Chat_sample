@@ -29,7 +29,7 @@ function Logger(props) {
         </form>
       </div>
       <div className="heading" >
-        <a href="http://localhost:5192/RatingObjs/Index"> Rate us</a>
+        <a href="http://localhost:5124/RatingObjs/Index"> Rate us</a>
       </div>
     </div>);
 }

@@ -134,15 +134,7 @@ function App() {
         signer(event);
         return;
     }
-    //check if username not taken
-   /* for (var i = 0; i < members.length; i++) {
-      if (reg.Username === members[i].Username) {
-        alert("Username '" + reg.Username + "' already taken");
-        signer(event);
-        return;
-      }
-      */
-   // }
+
     if (reg.Password !== reg.Password2) {
       alert("password dont match");
       signer(event);
@@ -154,133 +146,17 @@ function App() {
       return;
     }
     addUserToServer(event);
-    //if all checks passed successfully - register and login
-    //const newMember = { "Username": reg.Username, "Password": reg.Password, "Nickname": reg.Nickname, profilePhoto: profilePhoto };
-    //let tempMem = members
-    //tempMem.push(newMember)
-    //setMembers(tempMem);
-    //let tempContacts = contacts;
-    //tempContacts.push({ Username: reg.Username, friends: [] })
-    //setContacts(tempContacts);
-    //logger(event);
-
- 
     
+   
   }
 
   //the members array
-  const [members, setMembers] = useState([
-    {
-      Username: "Ron"
-      , password: "12345rR",
-      nickname: "Salman",
-      profilePhoto : Contact
-    },
-    {
-      Username: "Ortal"
-      , password: "123456oO",
-      nickname: "Ort",
-      profilePhoto : Contact1
-    },
-    {
-      Username: "Moshe"
-      , password: "12345mM",
-      nickname: "moshke",
-      profilePhoto : Contact
-    },
-    {
-      Username: "Avital"
-      , password: "123456aA",
-      nickname: "avital",
-      profilePhoto : Contact1
-    },
-    {
-      Username: "Yoav"
-      , password: "12345yY",
-      nickname: "yoav",
-      profilePhoto : Contact
-    }
-  ]);
+  const [members, setMembers] = useState([]);
   //////////////////chat//////////////////////
-  //each member has array friends
-  const [contacts, setContacts] = useState(
-    [{ Username: "Ron", friends: [{Username : "Ortal", nickname : "Ort"}] },
-    { Username: "Ortal", friends: [{Username : "Ron", nickname : "Salman"}, {Username : "Moshe", nickname : "moshke"}] },
-    { Username: "Moshe", friends: [{Username : "Ortal", nickname : "Ort"}] },
-    { Username: "Avital", friends: []},
-    { Username: "Yoav", friends: []}])
-  
-
-
-
-
-  //find the logger's friends
-  // var friends;
-  // for (var i = 0; i < contacts.length; i++) {
-  //   if (contacts[i].Username === log.Username) {
-  //     friends = contacts[i].friends;
-  //     break;
-  //   }
-  // }
-
- 
-  //   var exists = 0;
-  //   var nickname = "";
-  //   //check if newFriend exists
-  //   for (let i = 0; i < members.length; i++) {
-  //     if (members[i].Username === event.target.value) {
-  //       exists = 1;
-  //       nickname = members[i].nickname;
-  //       break;
-  //     }
-  //   }
-  //   if (!exists) {
-  //     return;
-  //   }
-  //   //if mewFriend is logger - do nothing
-  //   if (event.target.value === log.Username) {
-  //     return;
-  //   }
-  //   //if already a friend
-  //   for (let i = 0; i < friends.length; i++) {
-  //     console.log(friends[i]);
-  //     console.log(event.target.value);
-  //     if (friends[i].Username === event.target.value) {
-  //       deleteCpopupInput();
-  //       return;
-  //     }
-  //   }
-  //   //else -  add as friend
-  //   for (let i = 0; i < contacts.length; i++) {
-  //     if (contacts[i].Username === log.Username) {
-  //       var newf = {Username : event.target.value, nickname : nickname};
-  //       contacts[i].friends.push(newf);
-  //       console.log("after adding")
-  //       console.log(contacts)
-  //       setContacts([...contacts])
-  //       deleteCpopupInput();
-  //       return;
-  //     }
-  //   }
-  // }
-  ////////////////////////////////////////
 
   //each two members have chat (array of messages )
   //message have time, who sent it(1 or 2) and type (string, image, video or record)
-  const [messages1, setMessage1] = useState(
-    [{ Username1: "Ortal", Username2: "Ron", chat: [{time: "00:00", flag: 1, str: "Ron, can you send me the video?" ,image : '', video :'',record:'' },
-            {time: "00:00", flag: 2, str: '', image : '', video : Video1 ,record:'' }, 
-            {time: "00:00", flag: 1, str: '',image : Crown, video :'',record:'' },] },
-     { Username1: "Ortal", Username2: "Moshe",chat: [{time: "00:00", flag: 1, str: "mosh" ,image : '', video :'',record:'' },
-            {time: "00:00", flag: 2, str: "ort" ,image : '', video :'',record:'' },
-            {time: "00:00", flag: 1, str: '' ,image : '', video :'',record: Record1 }] },
-     { Username1: "Ron", Username2: "Ortal", chat: [{time: "00:00", flag: 2, str: "Ron, can you send me the video?" ,image : '', video :'',record:'' },
-              {time: "00:00", flag: 1, str: '', image : '', video : Video1 ,record:'' }, 
-              {time: "00:00", flag: 2, str: '',image : Crown, video :'',record:'' }] },
-     { Username1: "Moshe", Username2: "Ortal",chat: [{time: "00:00", flag: 2, str: "mosh" ,image : '', video :'',record:'' },
-             {time: "00:00", flag: 1, str: "ort" ,image : '', video :'',record:'' },
-             {time: "00:00", flag: 2, str: '' ,image : '', video :'',record: Record1 }] }]
-  )
+
   //////////////////////////////////////////send a massage data
   const [send, setsend] = useState({time: "00:00", flag: 1, str: "" ,image : '', video :'',record:''});
   //save the new message to be sent
@@ -336,8 +212,6 @@ function App() {
     //catch the friend that we are chatting with right now
     setcurrentFriend(name);
     setcurrentFriendServe(server);
-   // console.log(currentFriend.server);
-    //console.log(currentFriend.id);
 
 
     //open chat
@@ -346,33 +220,7 @@ function App() {
     }
     setStartMessagesSearch(!startMessagesSearch);
   }
-  //find the current chat
-  // function chatFinder(event) {
-  //   //catch the friend that we are chatting with right now
-  //   setcurrentFriend(event.currentTarget.value);
-  //   //open chat
-  //   if (openChat !== 1) {
-  //     openTheChat(event);
-  //   }
-  //   //seek the chat, catch it and display it on screen
-  //   for (var i = 0; i < messages.length; i++) {
-  //     if (messages[i].Username1 === log.Username
-  //       && messages[i].Username2 === event.currentTarget.value) {
-  //       var tempChat = {
-  //         Username1: messages[i].Username1, Username2: messages[i].Username2
-  //         , chat: messages[i].chat
-  //       }
-  //       setChat(tempChat);
-  //       return;
-  //     }
-  //   }
-  //   //if there is no chat yet - initialize one
-  //   setChat({ Username1: log.Username, Username2: event.currentTarget.value , chat: [] });
-  //   var helpChat = { Username1: log.Username, Username2: event.currentTarget.value , chat: [] }
-  //   var tempMessages = [...messages];
-  //   tempMessages.push(helpChat)
-  //   setMessage(tempMessages);
-  // }
+
 
   ////////////for the popups///////////////////////////
   function deleteCpopupInput(){
@@ -403,58 +251,6 @@ function App() {
 
 //for scrolling down a chat
 var [scrl,setScrl] = useState(0);
-
-//add new message to current chat
-  function addToChat(event) {
-    var x = chat.chat;
-    var tempMsg;
-    var today = new Date();
-    //create new message according to type(value)
-    if (event.currentTarget.value === "Str") {
-      tempMsg = {time: today.getHours() + ':' + today.getMinutes(), flag: 1, str: send.str, image : '', video :'' ,record:''};
-      
-    }
-    if (event.currentTarget.value === "Image") {
-      tempMsg = {time: today.getHours() + ':' + today.getMinutes(), flag: 1, str: "" ,image : file, video :'' ,record:'' };
-    }
-    if (event.currentTarget.value === "Video") {
-      tempMsg = {time: today.getHours() + ':' + today.getMinutes(), flag: 1, str: "" ,image : '', video : file ,record:'' };
-    }
-    if (event.currentTarget.value === "Voice") {
-      if (recordUrl !== '') {
-        tempMsg = {time: today.getHours() + ':' + today.getMinutes(), flag: 1, str: "" ,image : '', video : '' ,record: recordUrl };
-      }
-      else{
-        return;
-      }
-    }
-    if (event.currentTarget.value === "Crown") {
-      tempMsg = {time: today.getHours() + ':' + today.getMinutes(), flag: 1, str: "" ,image : Crown, video : '' ,record: '' };
-    }
-    console.log(tempMsg);
-    if(tempMsg.str == '' && tempMsg.image == '' && tempMsg.video == '' && tempMsg.record == ''){
-      return;
-    }
-    //add message to current chat
-    x.push(tempMsg);
-    console.log(x);
-    const new_obj = { ...chat, chat: x };
-    setChat(new_obj);
-    for (var i = 0; i < messages.length; i++) {
-      if (messages[i].Username1 === chat.Username1
-        && messages[i].Username2 === chat.Username2) {
-        var tempMessages = [...messages];
-        tempMessages[i] = new_obj;
-        setMessages(tempMessages);
-        console.log(messages);
-        deleteInput();
-        setrecordUrl('');
-        //scroll down
-        setScrl(1);
-        return;
-      }
-    }
-  }
 
 
   async function addMsgToAnotherServ() {
@@ -555,16 +351,7 @@ try{
   const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/MyHub")
   .build();
 
-  //connection.on("messageAdded",()=>{
-    //console.log("enter");
-    //console.log(startMessagesSearch);
-    //setTry2(!try2);
-    //setStartMessagesSearch(false);
-    //console.log(startMessagesSearch);
-    //setStartMessagesSearch(true);
-    //console.log(startMessagesSearch);
-   // console.log("enter"); 
- //});
+ 
   connection.on("somthingAdded",()=>{
     
     console.log("enter");
