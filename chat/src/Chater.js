@@ -5,6 +5,7 @@ import './Chater.css';
 import ChatBox from './ChatBox';
 import Messageshow from './Messageshow';
 import { useEffect, useState } from "react";
+import Photo from "./contact.png";
 
 
 //display chat screen 
@@ -75,7 +76,7 @@ import { useEffect, useState } from "react";
         <div className="col ">
           <div className='row'>
             <ul>
-            <li><div className="chatnav4" > <img src={photo} className="contact-img" /></div></li>
+            <li><div className="chatnav4" > <img src={Photo} className="contact-img" /></div></li>
               <li><div className="chatnav4" >Hello {props.log.Username}</div></li>
               <li className="send"><Cpopup log={props.log} friends={friends} add={props.add} contacts={props.contacts}
                 members={props.members} handelCpopup={props.handelCpopup} newFriend={props.newFriend} /></li>
@@ -89,7 +90,7 @@ import { useEffect, useState } from "react";
         <div className="col-7" id="col7">
           <div className='row'>
             <ul>
-              <li><div className="chatnav4" > <img src={photoFriend} className="contact-img" /></div></li>
+              <li><div className="chatnav4" > <img src={Photo} className="contact-img" /></div></li>
               <li><div className="chatnav4" > {nickname}</div></li>
             </ul>
           </div>

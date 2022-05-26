@@ -485,7 +485,8 @@ var [scrl,setScrl] = useState(0);
 
 
   async function addToChat2(event){
-    await addMsg();
+    if(send.str !== "") {
+      await addMsg();
     await addMsgToAnotherServ();
     setTry2(!try2);
     setStartMessagesSearch(!startMessagesSearch);
@@ -493,6 +494,7 @@ var [scrl,setScrl] = useState(0);
     //scroll down
     setScrl(1);
     return;
+    }
    }
 
   ////////////////////////////////////////cpopup
@@ -542,11 +544,13 @@ const [try2,setTry2] = useState(true) ;
 
    // //add friend to logger
    async function add() {
-    await addContact();
+    if(newFriend !== "" && newFriendNickname !== "" && newFriendServer !== "") {
+      await addContact();
     await addContactToAnotherServ();
     deleteCpopupInput();
     setTry2(!try2);
     return;
+    }
    }
         //////////////////////////////////////////////////////////////////////////
   ////signalr
