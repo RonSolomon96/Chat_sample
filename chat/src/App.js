@@ -461,7 +461,7 @@ var [scrl,setScrl] = useState(0);
     try {
       const newMsg = { "From" : log.Username, "To" : currentFriend ,"Content": send.str}
       const response = await axios.post("http://"+ currentFriendServe + "/api/transfer", newMsg);
-      if (response.status == 200) {
+      if (response.status == 201) {
         setUpdate(!update);
       }
     }
@@ -474,7 +474,7 @@ var [scrl,setScrl] = useState(0);
     try {
       const newMsg = { "Content": send.str}
       const response = await axios.post("http://localhost:5020/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages", newMsg);
-      if (response.status == 200) {
+      if (response.status == 201) {
         setUpdate(!update);
       }
     }
@@ -518,7 +518,7 @@ var [scrl,setScrl] = useState(0);
     try {
       const newContact = { "Id": newFriend, "Name": newFriendNickname, "Server": newFriendServer}
       const response = await axios.post("http://localhost:5020/api/Contacts/" + log.Username, newContact);
-      if (response.status == 200) {
+      if (response.status == 201) {
         setUpdate(!update);
       }
     }
@@ -530,7 +530,7 @@ async function addContactToAnotherServ() {
   try {
     const payload = { "From" : log.Username, "To" : newFriend , "Server": "localhost:5020"}
     const response = await axios.post("http://" + newFriendServer + "/api/invitations", payload);
-    if (response.status == 200) {
+    if (response.status == 201) {
       setUpdate(!update);
     }
   }
@@ -648,7 +648,7 @@ try{
     return (<Signer handleClick={logger} handleSign={register} reg={reg} handleChange={handleChange} handleProfilePhoto={handleProfilePhoto}/>);
   }
   if (state === 3) {
-    return (<Chater handleClick={logger} noa = {noa} try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
+    return (<Chater handleClick={logger}  try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
     chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}
