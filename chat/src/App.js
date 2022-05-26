@@ -549,7 +549,6 @@ const [try2,setTry2] = useState(true) ;
    }
         //////////////////////////////////////////////////////////////////////////
   ////signalr
-  const [noa, setNoa] = useState(true);
   async function  startConnect(){
 try{
   const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/MyHub")
@@ -578,7 +577,6 @@ try{
   });
   
   await connection.start();
-  setNoa(connection);
 }catch(e){console.log(e)};
   };
 
