@@ -7,7 +7,6 @@ function Logger(props) {
       <div className="heading">
         Hello guest
       </div>
-
       <div className="mb-3">
         <p id='Logfont'>Log in</p>
         <form className='log-form'>
@@ -28,6 +27,9 @@ function Logger(props) {
           <br></br>
           <button type="submit" className="btn btn-primary" onClick={props.handleClick} >Sign up</button>
         </form>
+      </div>
+      <div className="heading" >
+        <a href="http://localhost:5192/RatingObjs/Index"> Rate us</a>
       </div>
     </div>);
 }
