@@ -331,7 +331,7 @@ function App() {
           findMessages()
         }
       },[startMessagesSearch]);
-
+  
   //find the current chat
   function chatFinder(name, server) {
     //catch the friend that we are chatting with right now
@@ -488,12 +488,10 @@ var [scrl,setScrl] = useState(0);
   async function addToChat2(event){
     await addMsg();
     await addMsgToAnotherServ();
-    setTry2(!try2);
+    setStartMessagesSearch(!startMessagesSearch);
     deleteInput();
-    setrecordUrl('');
     //scroll down
     setScrl(1);
-    setStartMessagesSearch(!startMessagesSearch);
     return;
    }
 
@@ -557,9 +555,17 @@ const [try2,setTry2] = useState(true) ;
 try{
   const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/MyHub")
   .build();
+  connection.on("messageAdded",()=>{
+    console.log("enter");
+    console.log(startMessagesSearch);  
+    setStartMessagesSearch(!startMessagesSearch);
+    console.log("enter"); 
+  });
   connection.on("somthingAdded",()=>{
+    
     setTry2(!try2);
   });
+  
   await connection.start();
   setNoa(connection);
 }catch(e){console.log(e)};
@@ -633,7 +639,7 @@ try{
   }
   if (state === 3) {
     return (<Chater handleClick={logger} noa = {noa} try2 = {try2} setTry2 = {setTry2} log={log} add={add} messages={messages}
-      chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
+    chat={messages} chatFinder={chatFinder} handleSend={handleSend} addToChat={addToChat2} currentFriend={currentFriend}
        file ={file} handleFile = {handleFile} openChat = {openChat} record = {record} recordUrl = {recordUrl}
        stopRecord = {stopRecord} handelCpopup = {handelCpopup} newFriend = {newFriend} members = {members} scrl = {scrl} setScrl = {setScrl}
        screenSize={(screenSize.dynamicWidth * 0.45)}/>)

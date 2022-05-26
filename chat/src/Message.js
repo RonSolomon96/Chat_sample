@@ -55,7 +55,7 @@ function Message(props) {
 
             <div className="message2">
                 {props.message.content}
-                <div className="message-timestamp-left">{props.message.created}</div>
+                <div className="message-timestamp-right">{props.message.created}</div>
             </div>)
         // if (props.message.video !== '') {
         //     return (
