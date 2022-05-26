@@ -311,8 +311,7 @@ function App() {
   // set the current chat data
   var [chat, setChat] = useState({ Username1: "", Username2: "", chat: [] });
 
-  const [startMessagesSearch,setStartMessagesSearch] =useState(true) ;
-
+  const [startMessagesSearch,setStartMessagesSearch] = useState(true) ;
   const [messages,setMessages] = useState([]) ;
       //////////////////////////////////////////////////////////////////////////////
       useEffect( () =>  {
@@ -555,15 +554,27 @@ const [try2,setTry2] = useState(true) ;
 try{
   const connection = new HubConnectionBuilder().withUrl("http://localhost:5020/MyHub")
   .build();
-  connection.on("messageAdded",()=>{
-    console.log("enter");
-    console.log(startMessagesSearch);  
-    setStartMessagesSearch(!startMessagesSearch);
-    console.log("enter"); 
-  });
+
+  //connection.on("messageAdded",()=>{
+    //console.log("enter");
+    //console.log(startMessagesSearch);
+    //setTry2(!try2);
+    //setStartMessagesSearch(false);
+    //console.log(startMessagesSearch);
+    //setStartMessagesSearch(true);
+    //console.log(startMessagesSearch);
+   // console.log("enter"); 
+ //});
   connection.on("somthingAdded",()=>{
     
+    console.log("enter");
+    console.log(startMessagesSearch);
     setTry2(!try2);
+    setStartMessagesSearch(!false);
+    console.log(startMessagesSearch);
+    //setStartMessagesSearch(true);
+    console.log(startMessagesSearch);
+    console.log("enter");
   });
   
   await connection.start();
