@@ -20,3 +20,5 @@ Password must be between 6 to 20 characters and contain at least one numeric dig
 ## Important to know :
 You must run server project (localhost:5020) before running this project.
 The server repo: https://github.com/RonSolomon96/mitkadem2_2
+
+Also, run from "chat" directory : npm install @microsoft/signalr.
