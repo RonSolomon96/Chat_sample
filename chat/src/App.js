@@ -360,8 +360,9 @@ try{
     
     console.log("enter");
     console.log(startMessagesSearch);
-    setTry2(!try2);
+    setTry2(false);
     setStartMessagesSearch(false);
+    setTry2(true);
     console.log(startMessagesSearch);
     setStartMessagesSearch(true);
     console.log(startMessagesSearch);
