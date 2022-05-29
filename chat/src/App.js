@@ -194,7 +194,7 @@ function App() {
         if(log.Username !== "" && currentFriend !== "") {
           async function findMessages (){
             try {
-              const response = await axios.get("http://localhost:5020/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages");
+              const response = await axios.get("http://localhost:5020/api/Contacts/" + currentFriend + "/Messages/?User=" + log.Username);
               if (response.status == 200) {
                 setMessages(response.data);
                 return;
@@ -269,7 +269,7 @@ var [scrl,setScrl] = useState(0);
   async function addMsg() {
     try {
       const newMsg = { "Content": send.str}
-      const response = await axios.post("http://localhost:5020/api/Contacts/" + log.Username + "/" + currentFriend + "/Messages", newMsg);
+      const response = await axios.post("http://localhost:5020/api/Contacts/" + currentFriend + "/Messages?User=" + log.Username, newMsg);
       if (response.status == 201) {
         setUpdate(!update);
       }
@@ -315,7 +315,7 @@ var [scrl,setScrl] = useState(0);
   async function addContact() {
     try {
       const newContact = { "Id": newFriend, "Name": newFriendNickname, "Server": newFriendServer}
-      const response = await axios.post("http://localhost:5020/api/Contacts/" + log.Username, newContact);
+      const response = await axios.post("http://localhost:5020/api/Contacts/?User=" + log.Username, newContact);
       if (response.status == 201) {
         setUpdate(!update);
       }

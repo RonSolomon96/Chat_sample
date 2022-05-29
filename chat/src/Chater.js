@@ -19,7 +19,7 @@ import Photo from "./contact.png";
       useEffect( () =>  {
         async function findContact (){
           try {
-            const response = await axios.get("http://localhost:5020/api/Contacts/" + props.log.Username);
+            const response = await axios.get("http://localhost:5020/api/Contacts/?User=" + props.log.Username);
             if (response.status == 200) {
               setFriends(response.data);
               return;
